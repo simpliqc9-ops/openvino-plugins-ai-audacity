@@ -20,15 +20,6 @@ namespace ov_demix
 
             ov::AnyMap properties = { ov::hint::performance_mode(ov::hint::PerformanceMode::LATENCY) };
 
-#if 1
-            // Enable f32 precision for GPU device, as for some reason it produces incorrect results
-            // for default fp16 mode right now.
-            if (device.find("GPU") != std::string::npos)
-            {
-                properties.insert(ov::hint::execution_mode(ov::hint::ExecutionMode::ACCURACY));
-            }
-#endif
-
             if (!cache_dir.empty())
             {
                 properties.insert(ov::cache_dir(cache_dir));
