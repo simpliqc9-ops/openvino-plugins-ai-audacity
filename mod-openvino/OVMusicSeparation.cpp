@@ -123,7 +123,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       SeparationModeEntry entry;
       entry.stems = { "Crowd" };
       entry.target_stem_for_instrumental = 0; //crowd stem
-      model_to_separation_map.emplace("MelBandRoformer Crowd (@aufr33 & @viperx)", entry);
+      model_to_separation_map.emplace("MelBandRoformer Crowd (@aufr33, @viperx)", entry);
    }
 
    {
