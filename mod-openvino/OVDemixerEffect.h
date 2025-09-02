@@ -6,6 +6,7 @@
 #include "StatefulEffect.h"
 #include "effects/StatefulEffectUIServices.h"
 #include <wx/weakref.h>
+#include <mutex>
 
 class WaveTrack;
 class wxChoice;
@@ -102,5 +103,10 @@ private:
     std::string m_modelManagerName = "Unknown Name";
 
     bool _bInitAlreadySuccessful = false;
+
+    std::mutex mProgMutex;
+    double mProgressFrac = 0.;
+    bool mIsCancelled = false;
+
     DECLARE_EVENT_TABLE()
 };

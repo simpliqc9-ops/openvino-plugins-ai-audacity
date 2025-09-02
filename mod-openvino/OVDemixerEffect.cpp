@@ -317,24 +317,20 @@ static std::vector<WaveTrack::Holder> CreateSourceTracks
 
 static bool HTDemucsProgressUpdate(double perc_complete, void* user)
 {
-   EffectOVDemixerEffect* demixer = (EffectOVDemixerEffect*)user;
-
-    perc_complete = perc_complete * 100;
-    if (perc_complete > 100)
-        perc_complete = 100;
-
+    EffectOVDemixerEffect* demixer = (EffectOVDemixerEffect*)user;
+    if (perc_complete > 1)
+        perc_complete = 1.;
     return demixer->UpdateProgress(perc_complete);
 }
 
 bool EffectOVDemixerEffect::UpdateProgress(double perc)
 {
-    //TotalProgress will return true if user clicks 'cancel'
-    if (TotalProgress(perc / 100.0))
+    std::lock_guard<std::mutex> guard(mProgMutex);
+    mProgressFrac = perc;
+    if (mIsCancelled)
     {
-        std::cout << "User cancelled!" << std::endl;
         return false;
     }
-
     return true;
 }
 
@@ -342,6 +338,8 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
 {
     try
     {
+        mIsCancelled = false;
+
         std::string model_selection_str = mSupportedModels[m_modelSelectionChoice];
 
         auto model_collection = OVModelManager::instance().GetModelCollection(m_modelManagerName);
@@ -437,12 +435,20 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     {
                         message += " (This could take a while if this is the first time running this feature with this device)";
                     }
-                    TotalProgress(0.01, TranslatableString{ wxString(message), {} });
+                    if (TotalProgress(0.01, TranslatableString{ wxString(message), {} }))
+                    {
+                       mIsCancelled = true;
+                    }
                 }
 
                 total_time += 0.5;
 
             } while (status != std::future_status::ready);
+
+            if (mIsCancelled)
+            {
+               return false;
+            }
 
             model = create_model_fut.get();
 
@@ -585,10 +591,35 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                         std::to_string(total_samples) + " samples");
                 }
 
-                TotalProgress(0.01, TranslatableString{ wxString("Applying " + m_effectName), {} });
-
                 ov_demix::AudioTrack input_channels = { left_samples, right_samples };
-                auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfOverlaps, HTDemucsProgressUpdate, this);
+
+                auto demix_run_future = std::async(std::launch::async, [this, &model , &input_channels]
+                   {
+                      auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfOverlaps, HTDemucsProgressUpdate, this);
+
+                      return output_stems;
+                   }
+                );
+
+                TotalProgress(0.0, TranslatableString{ wxString("Applying " + m_effectName), {} });
+                mProgressFrac = 0.0;
+                std::future_status status;
+                do {
+                   using namespace std::chrono_literals;
+                   status = demix_run_future.wait_for(0.5s);
+                   {
+                      std::lock_guard<std::mutex> guard(mProgMutex);
+                      if (TotalProgress(mProgressFrac))
+                      {
+                         mIsCancelled = true;
+                      }
+                   }
+                } while (status != std::future_status::ready);
+
+                if (mIsCancelled)
+                   return false;
+
+                auto output_stems = demix_run_future.get();
 
                 auto pProject = FindProject();
                 const auto& selectedRegion =
