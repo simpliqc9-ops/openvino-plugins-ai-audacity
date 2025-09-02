@@ -39,7 +39,6 @@
 #include "demix/mdx23c.h"
 
 BEGIN_EVENT_TABLE(EffectOVDemixerEffect, wxEvtHandler)
-EVT_CHECKBOX(ID_Type_AdvancedCheckbox, EffectOVDemixerEffect::OnAdvancedCheckboxChanged)
 EVT_BUTTON(ID_Type_DeviceInfoButton, EffectOVDemixerEffect::OnDeviceInfoButtonClicked)
 EVT_BUTTON(ID_Type_ModelManagerButton, EffectOVDemixerEffect::OnModelManagerButtonClicked)
 EVT_CHOICE(ID_Type_ModelSelection, EffectOVDemixerEffect::OnModelSelectionChanged)
@@ -202,13 +201,6 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
         }
         S.EndStatic();
 
-        //advanced options
-        S.StartMultiColumn(2, wxLEFT);
-        {
-            mShowAdvancedOptionsCheckbox = S.Id(ID_Type_AdvancedCheckbox).AddCheckBox(XXO("&Advanced Options"), false);
-        }
-        S.EndMultiColumn();
-
         S.StartMultiColumn(2, wxLEFT);
         {
            mNumberOfOverlapsCtrl = S.Name(XO("Overlaps"))
@@ -218,25 +210,13 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
                     8)
                 .AddTextBox(XO("Overlaps"), L"", 12);
 
-            advancedSizer = mNumberOfOverlapsCtrl->GetContainingSizer();
         }
         S.EndMultiColumn();
 
     }
     S.EndVerticalLay();
 
-    show_or_hide_advanced_options();
-
     return nullptr;
-}
-
-void EffectOVDemixerEffect::show_or_hide_advanced_options()
-{
-    if (advancedSizer)
-    {
-        advancedSizer->ShowItems(mbAdvanced);
-        advancedSizer->Layout();
-    }
 }
 
 void EffectOVDemixerEffect::FitWindowToCorrectSize()
@@ -253,15 +233,6 @@ void EffectOVDemixerEffect::FitWindowToCorrectSize()
             p->Fit();
         }
     }
-}
-
-void EffectOVDemixerEffect::OnAdvancedCheckboxChanged(wxCommandEvent& evt)
-{
-    mbAdvanced = mShowAdvancedOptionsCheckbox->GetValue();
-
-    show_or_hide_advanced_options();
-
-    FitWindowToCorrectSize();
 }
 
 void EffectOVDemixerEffect::OnModelManagerButtonClicked(wxCommandEvent& evt)
@@ -493,10 +464,6 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
         EffectOutputTracks outputs{ *mTracks, GetType(), {{ mT0, mT1 }} };
 
         bool bGoodResult = true;
-
-        std::cout << "Creating OpenVINO-based HTDemucs object that will run on " << mSupportedDevices[m_deviceSelectionChoice] << std::endl;
-
-        TotalProgress(0.01, XO("Compiling AI Model..."));
 
         std::vector< WaveTrack::Holder > tracks_to_process;
         std::vector< int > orig_rates;

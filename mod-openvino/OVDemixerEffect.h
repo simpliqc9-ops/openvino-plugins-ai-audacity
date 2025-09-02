@@ -67,7 +67,6 @@ private:
     enum control
     {
         ID_Type = 10000,
-        ID_Type_AdvancedCheckbox,
         ID_Type_DeviceInfoButton,
         ID_Type_ModelManagerButton,
         ID_Type_ModelSelection
@@ -89,14 +88,8 @@ private:
 
     wxWeakRef<wxWindow> mUIParent{};
 
-    wxCheckBox* mShowAdvancedOptionsCheckbox;
-
     int mNumberOfOverlaps = 2;
     wxTextCtrl* mNumberOfOverlapsCtrl = nullptr;
-
-    void show_or_hide_advanced_options();
-    wxSizer* advancedSizer = nullptr;
-    bool mbAdvanced = false;
 
     std::vector<std::pair<std::string, std::string>> m_simple_to_full_device_map;
 
