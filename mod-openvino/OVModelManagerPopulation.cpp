@@ -91,7 +91,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "MelBandRoformer Crowd (@aufr33, @viperx)";
          mel_model_info->info = music_separation_mel_crowd_aufr33_viperx;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/crowd_mel_band_roformer_aufr33_viperx_openvino/resolve/b35f0dc8e9ee507582bc93a6e2b52e0dba9eca93/";
          mel_model_info->relative_path = relative_path + "melband_roformer_crowd";
          mel_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mel_model_info);
