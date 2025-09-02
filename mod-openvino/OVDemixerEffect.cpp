@@ -211,14 +211,14 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
 
         S.StartMultiColumn(2, wxLEFT);
         {
-            mNumberOfShiftsCtrl = S.Name(XO("Overlaps"))
-                .Validator<IntegerValidator<int>>(&mNumberOfShifts,
+           mNumberOfOverlapsCtrl = S.Name(XO("Overlaps"))
+                .Validator<IntegerValidator<int>>(&mNumberOfOverlaps,
                     NumValidatorStyle::DEFAULT,
                     1,
                     8)
                 .AddTextBox(XO("Overlaps"), L"", 12);
 
-            advancedSizer = mNumberOfShiftsCtrl->GetContainingSizer();
+            advancedSizer = mNumberOfOverlapsCtrl->GetContainingSizer();
         }
         S.EndMultiColumn();
 
@@ -416,7 +416,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
 
             std::cout << "model_folder = " << model_folder << std::endl;
             std::cout << "cache_path = " << cache_path << std::endl;
-            std::cout << "number of shifts = " << mNumberOfShifts << std::endl;
+            std::cout << "number of overlaps = " << mNumberOfOverlaps << std::endl;
 
             auto create_model_fut = std::async(std::launch::async, [&model_folder, &device, &cache_path, &model_selection_str, &sep_mode_it]()
                 {
@@ -621,7 +621,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                 TotalProgress(0.01, TranslatableString{ wxString("Applying " + m_effectName), {} });
 
                 ov_demix::AudioTrack input_channels = { left_samples, right_samples };
-                auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfShifts, HTDemucsProgressUpdate, this);
+                auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfOverlaps, HTDemucsProgressUpdate, this);
 
                 auto pProject = FindProject();
                 const auto& selectedRegion =

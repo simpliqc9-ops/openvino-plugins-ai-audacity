@@ -91,8 +91,8 @@ private:
 
     wxCheckBox* mShowAdvancedOptionsCheckbox;
 
-    int mNumberOfShifts = 1;
-    wxTextCtrl* mNumberOfShiftsCtrl = nullptr;
+    int mNumberOfOverlaps = 2;
+    wxTextCtrl* mNumberOfOverlapsCtrl = nullptr;
 
     void show_or_hide_advanced_options();
     wxSizer* advancedSizer = nullptr;
