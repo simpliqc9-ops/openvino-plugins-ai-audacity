@@ -81,7 +81,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "MelBandRoformer Vocals (@KimberleyJensen)";
          mel_model_info->info = music_separation_mel_vocals_kimberley_jenson;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/vocals_mel_band_roformer_kimberleyJSN_openvino/resolve/ce2bae0e27f9b115f38b1ddad35439df2d28cbbd/";
          mel_model_info->relative_path = relative_path + "melband_roformer_kimberley_jenson";
          mel_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mel_model_info);
