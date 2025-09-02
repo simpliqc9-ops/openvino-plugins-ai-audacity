@@ -157,7 +157,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_restora
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "Apollo MP3 Restore (@JusperLee)";
          mel_model_info->info = music_restoration_apollo_mp3_jusperlee;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/apollo_jusperlee_openvino/resolve/720c90a7df79fd6add733ca9748a22b471a3bc09/";
          mel_model_info->relative_path = relative_path + "apollo_jusperlee";
          mel_model_info->fileList = fileList;
          collection->models.emplace_back(mel_model_info);
