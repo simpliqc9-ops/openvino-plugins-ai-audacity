@@ -106,7 +106,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> mdx_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mdx_model_info->model_name = "MDX23C Drum Separation (@jarredou)";
          mdx_model_info->info = music_separation_msdx23c_drum_sep_jarredou;
-         mdx_model_info->baseUrl = "";
+         mdx_model_info->baseUrl = "https://huggingface.co/Intel/drumsep_mdx23c_jarredou_openvino/resolve/2944425500506842ccc4ca130b22be8cfe95b20d/";
          mdx_model_info->relative_path = relative_path + "drumsep_jarredou_mdx23c";
          mdx_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mdx_model_info);
