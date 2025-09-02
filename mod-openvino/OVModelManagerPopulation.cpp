@@ -133,7 +133,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_reverb_remova
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "MelBandRoformer Dereverb Mono (@anvuew)";
          mel_model_info->info = reverb_removal_mel_band_dereverb_mono_anvuew;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/dereverb_mel_band_roformer_anvuew_openvino/resolve/16aeb6904702657415c04bdc906dc9c3ed6524a1/mono/";
          mel_model_info->relative_path = relative_path + "mel_band_roformer_mono_anvuew";
          mel_model_info->fileList = fileList;
          collection->models.emplace_back(mel_model_info);
