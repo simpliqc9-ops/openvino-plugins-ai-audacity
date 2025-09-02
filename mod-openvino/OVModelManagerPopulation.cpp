@@ -9,12 +9,13 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
 
    // demucs models
    {
+      std::string demucs_baseURL = "https://huggingface.co/Intel/demucs-openvino/resolve/3e9e7d2f15c1ff4877917a224f2f9668c9c41881/";
       std::vector< std::string > fileList = { "htdemucs_fwd.bin", "htdemucs_fwd.xml" };
       {
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4";
          demucs_model_info->info = music_separation_demucs_v4;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -24,7 +25,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Drums";
          demucs_model_info->info = music_separation_demucs_v4_ft_drums;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_drums/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_drums";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -34,7 +35,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Bass";
          demucs_model_info->info = music_separation_demucs_v4_ft_bass;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_bass/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_bass";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -44,7 +45,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Other Instruments";
          demucs_model_info->info = music_separation_demucs_v4_ft_other;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_other/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_other";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -54,7 +55,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Vocals";
          demucs_model_info->info = music_separation_demucs_v4_ft_vocals;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_vocals/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_vocals";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -64,7 +65,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 6s";
          demucs_model_info->info = music_separation_demucs_v4_6s;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_6s/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_6s";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
