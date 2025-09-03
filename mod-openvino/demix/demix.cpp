@@ -174,7 +174,8 @@ namespace ov_demix
         auto result = torch::zeros(req_shape, torch::dtype(torch::kFloat32));
         auto counter = torch::zeros(req_shape, torch::dtype(torch::kFloat32));
 
-        for (int i = 0; i < mix.size(1); i += step)
+        int i = 0;
+        while (i < mix.size(1))
         {
             // part = mix[:, i:i + chunk_size]
             auto part = mix.index({ torch::indexing::Slice(), torch::indexing::Slice(i, i + chunk_size) });
@@ -194,6 +195,7 @@ namespace ov_demix
 
             int64_t start = i;
             int64_t seg_len = chunk_len;
+            i += step;
             if (model->PadOuterAndCrossFade())
             {
                 auto window = windowing_array.clone();
@@ -228,7 +230,7 @@ namespace ov_demix
 
             if (fn)
             {
-                double perc_complete = (double)(i + step) / (double)mix.size(1);
+                double perc_complete = (double)(i) / (double)mix.size(1);
                 if (!fn(perc_complete, progress_update_user))
                 {
                     std::cout << "cancelled." << std::endl;
