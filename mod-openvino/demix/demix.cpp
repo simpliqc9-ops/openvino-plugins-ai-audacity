@@ -210,7 +210,7 @@ namespace ov_demix
 
                 //result[..., start:start + seg_len] += x[j, ..., :seg_len].cpu() * window[..., :seg_len]
                 //counter[..., start:start + seg_len] += window[..., :seg_len]
-                auto result_slice = result.index({ torch::indexing::Ellipsis, torch::indexing::Slice::Slice(start, start + seg_len) });
+                auto result_slice = result.index({ torch::indexing::Ellipsis, torch::indexing::Slice(start, start + seg_len) });
                 auto x_slice = x.index({ 0, torch::indexing::Ellipsis, torch::indexing::Slice(torch::indexing::None, seg_len) });
                 auto counter_slice = counter.index({ torch::indexing::Ellipsis, torch::indexing::Slice(start, start + seg_len) });
                 auto window_slice = window.index({ torch::indexing::Ellipsis, torch::indexing::Slice(torch::indexing::None, seg_len) });
@@ -221,7 +221,7 @@ namespace ov_demix
             {
                 //result[..., start:start + seg_len] += x[j, ..., :seg_len].cpu()
                 //counter[..., start:start + seg_len] += 1.0
-                auto result_slice = result.index({ torch::indexing::Ellipsis, torch::indexing::Slice::Slice(start, start + seg_len) });
+                auto result_slice = result.index({ torch::indexing::Ellipsis, torch::indexing::Slice(start, start + seg_len) });
                 auto x_slice = x.index({ 0, torch::indexing::Ellipsis, torch::indexing::Slice(torch::indexing::None, seg_len) });
                 auto counter_slice = counter.index({ torch::indexing::Ellipsis, torch::indexing::Slice(start, start + seg_len) });
                 result_slice.add_(x_slice);
