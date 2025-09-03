@@ -37,7 +37,7 @@
 
 #include "OVModelManagerUI.h"
 
-const ComponentInterfaceSymbol EffectOVAudioSR::Symbol{ XO("OpenVINO Super Resolution") };
+const ComponentInterfaceSymbol EffectOVAudioSR::Symbol{ XO("Super Resolution") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVAudioSR > reg; }
 
@@ -515,7 +515,7 @@ struct OVAudioSRIntermediate
 
    int64_t seed;
 
-   
+
 };
 
 static std::shared_ptr< OVAudioSRIntermediate > run_audiosr_stage1(float* pInput, size_t nsamples, WaveTrack::Holder pTrack, std::shared_ptr<ov_audiosr::AudioSR> audioSR, int64_t seed)
@@ -689,7 +689,7 @@ bool EffectOVAudioSR::Process(EffectInstance&, EffectSettings&)
             }
 
             //kind of a special case. When the chunk size changes, all models need to get recompiled...
-            // so might as well just destroy _audioSR 
+            // so might as well just destroy _audioSR
             if (current_config.chunk_size != config.chunk_size)
             {
                bNeedsInit = true;
@@ -810,7 +810,7 @@ bool EffectOVAudioSR::Process(EffectInstance&, EffectSettings&)
       }
       descriptor_str += ", D=[" + encoder_device + "," + ddpm_device + "," + decoder_device + "]";
       descriptor_str += ")";
-      //Create resampled copies of the selected portion of tracks. 
+      //Create resampled copies of the selected portion of tracks.
       // This prevents the Resample operation to modify the user's
       // original track.
       for (auto track : outputs.Get().Selected<WaveTrack>())
@@ -1066,7 +1066,7 @@ bool EffectOVAudioSR::Process(EffectInstance&, EffectSettings&)
                               intermediate[stage_1_index] = intermediate_fut[stage_1_index].get();
                            }
 
-                           //stage 2 
+                           //stage 2
                            if (intermediate_fut[stage_2_index].valid())
                            {
                               intermediate[stage_2_index] = intermediate_fut[stage_2_index].get();
@@ -1130,7 +1130,7 @@ bool EffectOVAudioSR::Process(EffectInstance&, EffectSettings&)
                                  std::memcpy(pOutputCrossfadeStart + outputi, pNewWaveform + outputi, samples_left * sizeof(float));
                               }
                            }
-                        } 
+                        }
                      }
 
                      return out;

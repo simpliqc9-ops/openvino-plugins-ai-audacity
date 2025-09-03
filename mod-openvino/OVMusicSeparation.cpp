@@ -35,7 +35,7 @@
 #include "demix/htdemucs.h"
 #include "demix/mel_band_roformer.h"
 
-const ComponentInterfaceSymbol EffectOVMusicSeparation::Symbol{ XO("OpenVINO Music Separation") };
+const ComponentInterfaceSymbol EffectOVMusicSeparation::Symbol{ XO("Music Separation") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVMusicSeparation > reg; }
 

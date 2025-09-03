@@ -35,7 +35,7 @@
 #include "demix/htdemucs.h"
 #include "demix/mel_band_roformer.h"
 
-const ComponentInterfaceSymbol EffectOVReverbRemoval::Symbol{ XO("OpenVINO Reverb Removal") };
+const ComponentInterfaceSymbol EffectOVReverbRemoval::Symbol{ XO("Reverb Removal") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVReverbRemoval > reg; }
 

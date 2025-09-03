@@ -35,7 +35,7 @@
 #include "demix/htdemucs.h"
 #include "demix/mel_band_roformer.h"
 
-const ComponentInterfaceSymbol EffectOVMusicRestoration::Symbol{ XO("OpenVINO Music Restoration") };
+const ComponentInterfaceSymbol EffectOVMusicRestoration::Symbol{ XO("Music Restoration") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVMusicRestoration > reg; }
 
