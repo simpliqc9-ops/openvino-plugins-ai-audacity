@@ -130,7 +130,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
    {
       SeparationModeEntry entry;
       entry.stems = { "Kick", "Snare", "Toms", "Hi-hat", "Cymbals" };
-      entry.target_stem_for_instrumental = 0; //kick stem (this should be removed)
+      entry.target_stem_for_instrumental = -1; //No instrumental mode for this model
       model_to_separation_map.emplace("MDX23C Drum Separation (@jarredou)", entry);
    }
 
@@ -155,6 +155,12 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
          }
       }
 
+      pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(all_stems_mode), {}} });
+
+      // Skip adding an instrumental option if target_stem_for_instrumental is < 0
+      if (pair.second.target_stem_for_instrumental < 0)
+         continue;
+
       if (pair.second.target_stem_for_instrumental >= pair.second.stems.size())
       {
          throw std::runtime_error("GetModelMap: pair.second.target_stem_for_instrumental >= pair.second.stems.size");
@@ -162,11 +168,6 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       std::string instrumental_mode = "(2 Stem) " + pair.second.stems[pair.second.target_stem_for_instrumental]
          + ", " + pair.second.instrumental_name;
 
-      std::cout << pair.first << ":" << std::endl;
-      std::cout << "  " << all_stems_mode << std::endl;
-      std::cout << "  " << instrumental_mode << std::endl;
-
-      pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(all_stems_mode), {}} });
       pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(instrumental_mode), {}} });
    }
 
