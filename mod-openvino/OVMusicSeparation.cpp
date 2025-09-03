@@ -123,6 +123,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       SeparationModeEntry entry;
       entry.stems = { "Crowd" };
       entry.target_stem_for_instrumental = 0; //crowd stem
+      entry.instrumental_name = "No Crowd";
       model_to_separation_map.emplace("MelBandRoformer Crowd (@aufr33, @viperx)", entry);
    }
 
@@ -159,7 +160,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
          throw std::runtime_error("GetModelMap: pair.second.target_stem_for_instrumental >= pair.second.stems.size");
       }
       std::string instrumental_mode = "(2 Stem) " + pair.second.stems[pair.second.target_stem_for_instrumental]
-         + ", Instrumental";
+         + ", " + pair.second.instrumental_name;
 
       std::cout << pair.first << ":" << std::endl;
       std::cout << "  " << all_stems_mode << std::endl;

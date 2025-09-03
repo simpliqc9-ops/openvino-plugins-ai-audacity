@@ -75,6 +75,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       entry.stems = { "No Reverb" };
       entry.target_stem_for_instrumental = 0; //no reverb stem
       entry.bZeroPad = true;
+      entry.instrumental_name = "Only Reverb";
       model_to_separation_map.emplace("MelBandRoformer Dereverb Mono (@anvuew)", entry);
    }
 

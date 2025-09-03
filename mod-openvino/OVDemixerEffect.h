@@ -54,6 +54,8 @@ protected:
        std::vector<std::string> stems;
        int target_stem_for_instrumental = 0;
 
+       std::string instrumental_name = "Instrumental";
+
        //TODO: Move this someplace else. It's specific to MelBandRoformer models.
        bool bZeroPad = false;
     };

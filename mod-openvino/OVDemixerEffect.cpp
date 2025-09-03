@@ -631,6 +631,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                         " stems, but instead it returned " + std::to_string(output_stems.size()) + " stems.");
                 }
 
+                auto stem_labels_final = stem_labels;
                 // m_separationModeSelectionChoice==1 means instrumental mode is being used.
                 if (m_separationModeSelectionChoice == 1)
                 {
@@ -648,14 +649,14 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     output_stems = new_output_stems;
 
                     // replace stem_labels vector
-                    stem_labels = { sep_mode_it->second.stems[target_stem_for_instrumental], "Instrumental" };
+                    stem_labels_final = { sep_mode_it->second.stems[target_stem_for_instrumental], sep_mode_it->second.instrumental_name };
                 }
 
                 auto orig_track_name = pTrack->GetName();
-                for (int i = 0; i < stem_labels.size(); i++)
+                for (int i = 0; i < stem_labels_final.size(); i++)
                 {
                     // If it's a dummy stem, skip it.
-                    if (stem_labels[i] == "dummy") continue;
+                    if (stem_labels_final[i] == "dummy") continue;
 
                     auto& stem_track = output_stems[i];
 
@@ -663,7 +664,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     // retains the label of the track that it was copied from. So, we'll
                     // change the name of the input track here, copy it, and then change it
                     // back later.
-                    pTrack->SetName(orig_track_name + wxString(" - " + model_selection_str + " - " + stem_labels[i]));
+                    pTrack->SetName(orig_track_name + wxString(" - " + model_selection_str + " - " + stem_labels_final[i]));
 
                     //Create new output track from input track.
                     auto newOutputTrack = pTrack->EmptyCopy();
