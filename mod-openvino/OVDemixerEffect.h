@@ -66,6 +66,8 @@ protected:
 
     virtual std::unordered_map<std::string, SeparationModeEntry> GetModelMap() = 0;
 
+    bool m_bDisplaySepMode = true;
+
 private:
 
     wxChoice* mTypeChoiceDeviceCtrl;

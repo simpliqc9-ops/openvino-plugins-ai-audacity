@@ -169,16 +169,18 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
         }
         S.EndMultiColumn();
 
-        S.StartMultiColumn(2, wxLEFT);
-        {
-            //m_deviceSelectionChoice
-            mTypeChoiceSeparationModeCtrl = S.Id(ID_Type)
-                .MinSize({ -1, -1 })
-                .Validator<wxGenericValidator>(&m_separationModeSelectionChoice)
-                .AddChoice(XXO("Separation Mode:"),
+        if (m_bDisplaySepMode) {
+           S.StartMultiColumn(2, wxLEFT);
+           {
+              //m_deviceSelectionChoice
+              mTypeChoiceSeparationModeCtrl = S.Id(ID_Type)
+                 .MinSize({ -1, -1 })
+                 .Validator<wxGenericValidator>(&m_separationModeSelectionChoice)
+                 .AddChoice(XXO("Separation Mode:"),
                     Msgids(mGuiSeparationModeSelections.data(), mGuiSeparationModeSelections.size()));
+           }
+           S.EndMultiColumn();
         }
-        S.EndMultiColumn();
 
         SetModelSeparationModeSelections();
 
@@ -258,7 +260,7 @@ void EffectOVDemixerEffect::OnDeviceInfoButtonClicked(wxCommandEvent& evt)
 
 void EffectOVDemixerEffect::SetModelSeparationModeSelections()
 {
-    if (!mTypeChoiceSeparationModeCtrl || !mTypeChoiceModelSelection)
+    if (!mTypeChoiceSeparationModeCtrl || !mTypeChoiceModelSelection || !m_bDisplaySepMode)
         return;
 
     int current_selection = mTypeChoiceModelSelection->GetCurrentSelection();

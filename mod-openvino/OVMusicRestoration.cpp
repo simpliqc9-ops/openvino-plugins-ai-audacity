@@ -86,41 +86,8 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       model_to_separation_map.emplace("Apollo Universal Restore (@Lew)", entry);
    }
 
-   for (auto& pair : model_to_separation_map)
-   {
-      // Count number of non-dummy stems
-      int non_dummy_stems = 0;
-      for (auto& s : pair.second.stems)
-         if (s != "dummy") non_dummy_stems++;
-
-      // Generate the 'all stems' selection string.
-      std::string all_stems_mode = "(" + std::to_string(non_dummy_stems) + " Stem) ";
-      int stems_added = 1;
-      for (auto& s : pair.second.stems)
-      {
-         if (s != "dummy")
-         {
-            all_stems_mode += s;
-            if (stems_added < non_dummy_stems)
-               all_stems_mode += ", ";
-            stems_added++;
-         }
-      }
-
-      if (pair.second.target_stem_for_instrumental >= pair.second.stems.size())
-      {
-         throw std::runtime_error("GetModelMap: pair.second.target_stem_for_instrumental >= pair.second.stems.size");
-      }
-      std::string instrumental_mode = "(2 Stem) " + pair.second.stems[pair.second.target_stem_for_instrumental]
-         + ", Only Reverb";
-
-      std::cout << pair.first << ":" << std::endl;
-      std::cout << "  " << all_stems_mode << std::endl;
-      std::cout << "  " << instrumental_mode << std::endl;
-
-      pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(all_stems_mode), {}} });
-      pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(instrumental_mode), {}} });
-   }
+   // Disable 'Separation Mode' selection drop-down box. It doesn't really make sense for Music Restoration.
+   m_bDisplaySepMode = false;
 
    return model_to_separation_map;
 }
