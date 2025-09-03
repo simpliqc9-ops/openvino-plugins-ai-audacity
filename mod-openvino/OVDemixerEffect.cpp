@@ -631,9 +631,13 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                         " stems, but instead it returned " + std::to_string(output_stems.size()) + " stems.");
                 }
 
+                // make a copy of the stem labels here. We can't modify the original, as it could
+                // be used above in next iteration of the track processing loop.
                 auto stem_labels_final = stem_labels;
-                // m_separationModeSelectionChoice==1 means instrumental mode is being used.
-                if (m_separationModeSelectionChoice == 1)
+
+                // If this is an 'Only Instrumental' model, or if sep mode choice is 1, then we'll
+                // generate an instrumental track.
+                if (sep_mode_it->second.bOnlyInstrumental || m_separationModeSelectionChoice == 1)
                 {
                     auto target_stem_for_instrumental = sep_mode_it->second.target_stem_for_instrumental;
                     if (target_stem_for_instrumental >= output_stems.size())

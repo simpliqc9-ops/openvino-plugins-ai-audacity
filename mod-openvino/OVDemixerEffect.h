@@ -56,6 +56,10 @@ protected:
 
        std::string instrumental_name = "Instrumental";
 
+       // For some models (i.e. crowd removal), it makes sense to
+       // *only* provide the instrumental option.
+       bool bOnlyInstrumental = false;
+
        //TODO: Move this someplace else. It's specific to MelBandRoformer models.
        bool bZeroPad = false;
     };

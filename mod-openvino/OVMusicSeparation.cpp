@@ -124,6 +124,7 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
       entry.stems = { "Crowd" };
       entry.target_stem_for_instrumental = 0; //crowd stem
       entry.instrumental_name = "No Crowd";
+      entry.bOnlyInstrumental = true;
       model_to_separation_map.emplace("MelBandRoformer Crowd (@aufr33, @viperx)", entry);
    }
 
@@ -155,7 +156,9 @@ std::unordered_map<std::string, EffectOVDemixerEffect::SeparationModeEntry> Effe
          }
       }
 
-      pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(all_stems_mode), {}} });
+      if (!pair.second.bOnlyInstrumental) {
+         pair.second.guiSeparationModeSelections.push_back({ TranslatableString{ wxString(all_stems_mode), {}} });
+      }
 
       // Skip adding an instrumental option if target_stem_for_instrumental is < 0
       if (pair.second.target_stem_for_instrumental < 0)
