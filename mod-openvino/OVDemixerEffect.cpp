@@ -39,7 +39,6 @@
 #include "demix/mdx23c.h"
 
 BEGIN_EVENT_TABLE(EffectOVDemixerEffect, wxEvtHandler)
-EVT_CHECKBOX(ID_Type_AdvancedCheckbox, EffectOVDemixerEffect::OnAdvancedCheckboxChanged)
 EVT_BUTTON(ID_Type_DeviceInfoButton, EffectOVDemixerEffect::OnDeviceInfoButtonClicked)
 EVT_BUTTON(ID_Type_ModelManagerButton, EffectOVDemixerEffect::OnModelManagerButtonClicked)
 EVT_CHOICE(ID_Type_ModelSelection, EffectOVDemixerEffect::OnModelSelectionChanged)
@@ -170,16 +169,18 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
         }
         S.EndMultiColumn();
 
-        S.StartMultiColumn(2, wxLEFT);
-        {
-            //m_deviceSelectionChoice
-            mTypeChoiceSeparationModeCtrl = S.Id(ID_Type)
-                .MinSize({ -1, -1 })
-                .Validator<wxGenericValidator>(&m_separationModeSelectionChoice)
-                .AddChoice(XXO("Separation Mode:"),
+        if (m_bDisplaySepMode) {
+           S.StartMultiColumn(2, wxLEFT);
+           {
+              //m_deviceSelectionChoice
+              mTypeChoiceSeparationModeCtrl = S.Id(ID_Type)
+                 .MinSize({ -1, -1 })
+                 .Validator<wxGenericValidator>(&m_separationModeSelectionChoice)
+                 .AddChoice(XXO("Separation Mode:"),
                     Msgids(mGuiSeparationModeSelections.data(), mGuiSeparationModeSelections.size()));
+           }
+           S.EndMultiColumn();
         }
-        S.EndMultiColumn();
 
         SetModelSeparationModeSelections();
 
@@ -202,41 +203,22 @@ std::unique_ptr<EffectEditor> EffectOVDemixerEffect::PopulateOrExchange(
         }
         S.EndStatic();
 
-        //advanced options
         S.StartMultiColumn(2, wxLEFT);
         {
-            mShowAdvancedOptionsCheckbox = S.Id(ID_Type_AdvancedCheckbox).AddCheckBox(XXO("&Advanced Options"), false);
-        }
-        S.EndMultiColumn();
-
-        S.StartMultiColumn(2, wxLEFT);
-        {
-            mNumberOfShiftsCtrl = S.Name(XO("Overlaps"))
-                .Validator<IntegerValidator<int>>(&mNumberOfShifts,
+           mNumberOfOverlapsCtrl = S.Name(XO("Overlaps"))
+                .Validator<IntegerValidator<int>>(&mNumberOfOverlaps,
                     NumValidatorStyle::DEFAULT,
                     1,
                     8)
                 .AddTextBox(XO("Overlaps"), L"", 12);
 
-            advancedSizer = mNumberOfShiftsCtrl->GetContainingSizer();
         }
         S.EndMultiColumn();
 
     }
     S.EndVerticalLay();
 
-    show_or_hide_advanced_options();
-
     return nullptr;
-}
-
-void EffectOVDemixerEffect::show_or_hide_advanced_options()
-{
-    if (advancedSizer)
-    {
-        advancedSizer->ShowItems(mbAdvanced);
-        advancedSizer->Layout();
-    }
 }
 
 void EffectOVDemixerEffect::FitWindowToCorrectSize()
@@ -253,15 +235,6 @@ void EffectOVDemixerEffect::FitWindowToCorrectSize()
             p->Fit();
         }
     }
-}
-
-void EffectOVDemixerEffect::OnAdvancedCheckboxChanged(wxCommandEvent& evt)
-{
-    mbAdvanced = mShowAdvancedOptionsCheckbox->GetValue();
-
-    show_or_hide_advanced_options();
-
-    FitWindowToCorrectSize();
 }
 
 void EffectOVDemixerEffect::OnModelManagerButtonClicked(wxCommandEvent& evt)
@@ -287,7 +260,7 @@ void EffectOVDemixerEffect::OnDeviceInfoButtonClicked(wxCommandEvent& evt)
 
 void EffectOVDemixerEffect::SetModelSeparationModeSelections()
 {
-    if (!mTypeChoiceSeparationModeCtrl || !mTypeChoiceModelSelection)
+    if (!mTypeChoiceSeparationModeCtrl || !mTypeChoiceModelSelection || !m_bDisplaySepMode)
         return;
 
     int current_selection = mTypeChoiceModelSelection->GetCurrentSelection();
@@ -346,24 +319,20 @@ static std::vector<WaveTrack::Holder> CreateSourceTracks
 
 static bool HTDemucsProgressUpdate(double perc_complete, void* user)
 {
-   EffectOVDemixerEffect* demixer = (EffectOVDemixerEffect*)user;
-
-    perc_complete = perc_complete * 100;
-    if (perc_complete > 100)
-        perc_complete = 100;
-
+    EffectOVDemixerEffect* demixer = (EffectOVDemixerEffect*)user;
+    if (perc_complete > 1)
+        perc_complete = 1.;
     return demixer->UpdateProgress(perc_complete);
 }
 
 bool EffectOVDemixerEffect::UpdateProgress(double perc)
 {
-    //TotalProgress will return true if user clicks 'cancel'
-    if (TotalProgress(perc / 100.0))
+    std::lock_guard<std::mutex> guard(mProgMutex);
+    mProgressFrac = perc;
+    if (mIsCancelled)
     {
-        std::cout << "User cancelled!" << std::endl;
         return false;
     }
-
     return true;
 }
 
@@ -371,6 +340,8 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
 {
     try
     {
+        mIsCancelled = false;
+
         std::string model_selection_str = mSupportedModels[m_modelSelectionChoice];
 
         auto model_collection = OVModelManager::instance().GetModelCollection(m_modelManagerName);
@@ -416,7 +387,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
 
             std::cout << "model_folder = " << model_folder << std::endl;
             std::cout << "cache_path = " << cache_path << std::endl;
-            std::cout << "number of shifts = " << mNumberOfShifts << std::endl;
+            std::cout << "number of overlaps = " << mNumberOfOverlaps << std::endl;
 
             auto create_model_fut = std::async(std::launch::async, [&model_folder, &device, &cache_path, &model_selection_str, &sep_mode_it]()
                 {
@@ -466,12 +437,20 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     {
                         message += " (This could take a while if this is the first time running this feature with this device)";
                     }
-                    TotalProgress(0.01, TranslatableString{ wxString(message), {} });
+                    if (TotalProgress(0.01, TranslatableString{ wxString(message), {} }))
+                    {
+                       mIsCancelled = true;
+                    }
                 }
 
                 total_time += 0.5;
 
             } while (status != std::future_status::ready);
+
+            if (mIsCancelled)
+            {
+               return false;
+            }
 
             model = create_model_fut.get();
 
@@ -493,10 +472,6 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
         EffectOutputTracks outputs{ *mTracks, GetType(), {{ mT0, mT1 }} };
 
         bool bGoodResult = true;
-
-        std::cout << "Creating OpenVINO-based HTDemucs object that will run on " << mSupportedDevices[m_deviceSelectionChoice] << std::endl;
-
-        TotalProgress(0.01, XO("Compiling AI Model..."));
 
         std::vector< WaveTrack::Holder > tracks_to_process;
         std::vector< int > orig_rates;
@@ -618,10 +593,35 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                         std::to_string(total_samples) + " samples");
                 }
 
-                TotalProgress(0.01, TranslatableString{ wxString("Applying " + m_effectName), {} });
-
                 ov_demix::AudioTrack input_channels = { left_samples, right_samples };
-                auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfShifts, HTDemucsProgressUpdate, this);
+
+                auto demix_run_future = std::async(std::launch::async, [this, &model , &input_channels]
+                   {
+                      auto output_stems = ov_demix::Demix(model, input_channels, mNumberOfOverlaps, HTDemucsProgressUpdate, this);
+
+                      return output_stems;
+                   }
+                );
+
+                TotalProgress(0.0, TranslatableString{ wxString("Applying " + m_effectName), {} });
+                mProgressFrac = 0.0;
+                std::future_status status;
+                do {
+                   using namespace std::chrono_literals;
+                   status = demix_run_future.wait_for(0.5s);
+                   {
+                      std::lock_guard<std::mutex> guard(mProgMutex);
+                      if (TotalProgress(mProgressFrac))
+                      {
+                         mIsCancelled = true;
+                      }
+                   }
+                } while (status != std::future_status::ready);
+
+                if (mIsCancelled)
+                   return false;
+
+                auto output_stems = demix_run_future.get();
 
                 auto pProject = FindProject();
                 const auto& selectedRegion =
@@ -633,8 +633,13 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                         " stems, but instead it returned " + std::to_string(output_stems.size()) + " stems.");
                 }
 
-                // m_separationModeSelectionChoice==1 means instrumental mode is being used.
-                if (m_separationModeSelectionChoice == 1)
+                // make a copy of the stem labels here. We can't modify the original, as it could
+                // be used above in next iteration of the track processing loop.
+                auto stem_labels_final = stem_labels;
+
+                // If this is an 'Only Instrumental' model, or if sep mode choice is 1, then we'll
+                // generate an instrumental track.
+                if (sep_mode_it->second.bOnlyInstrumental || m_separationModeSelectionChoice == 1)
                 {
                     auto target_stem_for_instrumental = sep_mode_it->second.target_stem_for_instrumental;
                     if (target_stem_for_instrumental >= output_stems.size())
@@ -650,14 +655,14 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     output_stems = new_output_stems;
 
                     // replace stem_labels vector
-                    stem_labels = { sep_mode_it->second.stems[target_stem_for_instrumental], "Instrumental" };
+                    stem_labels_final = { sep_mode_it->second.stems[target_stem_for_instrumental], sep_mode_it->second.instrumental_name };
                 }
 
                 auto orig_track_name = pTrack->GetName();
-                for (int i = 0; i < stem_labels.size(); i++)
+                for (int i = 0; i < stem_labels_final.size(); i++)
                 {
                     // If it's a dummy stem, skip it.
-                    if (stem_labels[i] == "dummy") continue;
+                    if (stem_labels_final[i] == "dummy") continue;
 
                     auto& stem_track = output_stems[i];
 
@@ -665,7 +670,7 @@ bool EffectOVDemixerEffect::Process(EffectInstance&, EffectSettings&)
                     // retains the label of the track that it was copied from. So, we'll
                     // change the name of the input track here, copy it, and then change it
                     // back later.
-                    pTrack->SetName(orig_track_name + wxString(" - " + model_selection_str + " - " + stem_labels[i]));
+                    pTrack->SetName(orig_track_name + wxString(" - " + model_selection_str + " - " + stem_labels_final[i]));
 
                     //Create new output track from input track.
                     auto newOutputTrack = pTrack->EmptyCopy();

@@ -9,12 +9,13 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
 
    // demucs models
    {
+      std::string demucs_baseURL = "https://huggingface.co/Intel/demucs-openvino/resolve/3e9e7d2f15c1ff4877917a224f2f9668c9c41881/";
       std::vector< std::string > fileList = { "htdemucs_fwd.bin", "htdemucs_fwd.xml" };
       {
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4";
          demucs_model_info->info = music_separation_demucs_v4;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -24,7 +25,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Drums";
          demucs_model_info->info = music_separation_demucs_v4_ft_drums;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_drums/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_drums";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -34,7 +35,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Bass";
          demucs_model_info->info = music_separation_demucs_v4_ft_bass;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_bass/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_bass";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -44,7 +45,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Other Instruments";
          demucs_model_info->info = music_separation_demucs_v4_ft_other;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_other/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_other";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -54,7 +55,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 FT Vocals";
          demucs_model_info->info = music_separation_demucs_v4_ft_vocals;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_ht_vocals/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_ht_vocals";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -64,7 +65,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> demucs_model_info = std::make_shared<OVModelManager::ModelInfo>();
          demucs_model_info->model_name = "Demucs v4 6s";
          demucs_model_info->info = music_separation_demucs_v4_6s;
-         demucs_model_info->baseUrl = "";
+         demucs_model_info->baseUrl = demucs_baseURL + "htdemucs_v4_6s/";
          demucs_model_info->relative_path = relative_path + "htdemucs_v4_6s";
          demucs_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(demucs_model_info);
@@ -81,7 +82,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "MelBandRoformer Vocals (@KimberleyJensen)";
          mel_model_info->info = music_separation_mel_vocals_kimberley_jenson;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/vocals_mel_band_roformer_kimberleyJSN_openvino/resolve/ce2bae0e27f9b115f38b1ddad35439df2d28cbbd/";
          mel_model_info->relative_path = relative_path + "melband_roformer_kimberley_jenson";
          mel_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mel_model_info);
@@ -89,9 +90,9 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
 
       {
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
-         mel_model_info->model_name = "MelBandRoformer Crowd (@aufr33 & @viperx)";
+         mel_model_info->model_name = "MelBandRoformer Crowd (@aufr33, @viperx)";
          mel_model_info->info = music_separation_mel_crowd_aufr33_viperx;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/crowd_mel_band_roformer_aufr33_viperx_openvino/resolve/b35f0dc8e9ee507582bc93a6e2b52e0dba9eca93/";
          mel_model_info->relative_path = relative_path + "melband_roformer_crowd";
          mel_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mel_model_info);
@@ -106,7 +107,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_separat
          std::shared_ptr<OVModelManager::ModelInfo> mdx_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mdx_model_info->model_name = "MDX23C Drum Separation (@jarredou)";
          mdx_model_info->info = music_separation_msdx23c_drum_sep_jarredou;
-         mdx_model_info->baseUrl = "";
+         mdx_model_info->baseUrl = "https://huggingface.co/Intel/drumsep_mdx23c_jarredou_openvino/resolve/2944425500506842ccc4ca130b22be8cfe95b20d/";
          mdx_model_info->relative_path = relative_path + "drumsep_jarredou_mdx23c";
          mdx_model_info->fileList = fileList;
          music_sep_collection->models.emplace_back(mdx_model_info);
@@ -133,7 +134,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_reverb_remova
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "MelBandRoformer Dereverb Mono (@anvuew)";
          mel_model_info->info = reverb_removal_mel_band_dereverb_mono_anvuew;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/dereverb_mel_band_roformer_anvuew_openvino/resolve/16aeb6904702657415c04bdc906dc9c3ed6524a1/mono/";
          mel_model_info->relative_path = relative_path + "mel_band_roformer_mono_anvuew";
          mel_model_info->fileList = fileList;
          collection->models.emplace_back(mel_model_info);
@@ -157,7 +158,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_restora
          std::shared_ptr<OVModelManager::ModelInfo> mel_model_info = std::make_shared<OVModelManager::ModelInfo>();
          mel_model_info->model_name = "Apollo MP3 Restore (@JusperLee)";
          mel_model_info->info = music_restoration_apollo_mp3_jusperlee;
-         mel_model_info->baseUrl = "";
+         mel_model_info->baseUrl = "https://huggingface.co/Intel/apollo_jusperlee_openvino/resolve/720c90a7df79fd6add733ca9748a22b471a3bc09/";
          mel_model_info->relative_path = relative_path + "apollo_jusperlee";
          mel_model_info->fileList = fileList;
          collection->models.emplace_back(mel_model_info);

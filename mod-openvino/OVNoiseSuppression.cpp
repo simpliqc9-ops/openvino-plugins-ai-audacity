@@ -40,7 +40,7 @@
 
 #include "OVModelManagerUI.h"
 
-const ComponentInterfaceSymbol EffectOVNoiseSuppression::Symbol{ XO("OpenVINO Noise Suppression") };
+const ComponentInterfaceSymbol EffectOVNoiseSuppression::Symbol{ XO("Noise Suppression") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVNoiseSuppression > reg; }
 

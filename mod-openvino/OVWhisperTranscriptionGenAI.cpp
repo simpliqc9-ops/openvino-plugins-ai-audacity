@@ -152,7 +152,7 @@ static const std::vector< ovgenai_whisper_lang_entry > g_lang_entries = {
 };
 
 const ComponentInterfaceSymbol EffectOVWhisperTranscriptionGenAI::Symbol
-{ XO("OpenVINO Whisper Transcription (GenAI)") };
+{ XO("Whisper Transcription") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVWhisperTranscriptionGenAI > reg; }
 
@@ -248,7 +248,7 @@ bool EffectOVWhisperTranscriptionGenAI::Process(EffectInstance&, EffectSettings&
          return false;
       }
 
-      
+
       //  two label tracks, making the transition at each speaker turn.
       auto whisper_model_variant = mSupportedModels[m_modelSelectionChoice];
 
@@ -447,7 +447,7 @@ bool EffectOVWhisperTranscriptionGenAI::UpdateProgress(double perc)
 
 class CustomWhisperStreamer : public ov::genai::StreamerBase
 {
-public: 
+public:
    CustomWhisperStreamer(EffectOVWhisperTranscriptionGenAI *effect, size_t total_samples)
    : _effect(effect) {
 
@@ -815,7 +815,7 @@ std::unique_ptr<EffectEditor> EffectOVWhisperTranscriptionGenAI::PopulateOrExcha
                Msgids(mGuiModelSelections.data(), mGuiModelSelections.size()));
       }
       S.EndMultiColumn();
-  
+
       S.StartMultiColumn(4, wxLEFT);
       {
          mTypeChoiceModeCtrl = S.Id(ID_Type_Mode)

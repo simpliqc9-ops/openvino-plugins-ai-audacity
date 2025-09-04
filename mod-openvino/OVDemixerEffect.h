@@ -6,6 +6,7 @@
 #include "StatefulEffect.h"
 #include "effects/StatefulEffectUIServices.h"
 #include <wx/weakref.h>
+#include <mutex>
 
 class WaveTrack;
 class wxChoice;
@@ -53,11 +54,19 @@ protected:
        std::vector<std::string> stems;
        int target_stem_for_instrumental = 0;
 
+       std::string instrumental_name = "Instrumental";
+
+       // For some models (i.e. crowd removal), it makes sense to
+       // *only* provide the instrumental option.
+       bool bOnlyInstrumental = false;
+
        //TODO: Move this someplace else. It's specific to MelBandRoformer models.
        bool bZeroPad = false;
     };
 
     virtual std::unordered_map<std::string, SeparationModeEntry> GetModelMap() = 0;
+
+    bool m_bDisplaySepMode = true;
 
 private:
 
@@ -67,7 +76,6 @@ private:
     enum control
     {
         ID_Type = 10000,
-        ID_Type_AdvancedCheckbox,
         ID_Type_DeviceInfoButton,
         ID_Type_ModelManagerButton,
         ID_Type_ModelSelection
@@ -89,14 +97,8 @@ private:
 
     wxWeakRef<wxWindow> mUIParent{};
 
-    wxCheckBox* mShowAdvancedOptionsCheckbox;
-
-    int mNumberOfShifts = 1;
-    wxTextCtrl* mNumberOfShiftsCtrl = nullptr;
-
-    void show_or_hide_advanced_options();
-    wxSizer* advancedSizer = nullptr;
-    bool mbAdvanced = false;
+    int mNumberOfOverlaps = 2;
+    wxTextCtrl* mNumberOfOverlapsCtrl = nullptr;
 
     std::vector<std::pair<std::string, std::string>> m_simple_to_full_device_map;
 
@@ -109,5 +111,10 @@ private:
     std::string m_modelManagerName = "Unknown Name";
 
     bool _bInitAlreadySuccessful = false;
+
+    std::mutex mProgMutex;
+    double mProgressFrac = 0.;
+    bool mIsCancelled = false;
+
     DECLARE_EVENT_TABLE()
 };

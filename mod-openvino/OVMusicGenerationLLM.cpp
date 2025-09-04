@@ -42,7 +42,7 @@
 
 #include "OVModelManagerUI.h"
 
-const ComponentInterfaceSymbol EffectOVMusicGenerationLLM::Symbol{ XO("OpenVINO Music Generation") };
+const ComponentInterfaceSymbol EffectOVMusicGenerationLLM::Symbol{ XO("Music Generation") };
 
 namespace { BuiltinEffectsModule::Registration< EffectOVMusicGenerationLLM > reg; }
 
