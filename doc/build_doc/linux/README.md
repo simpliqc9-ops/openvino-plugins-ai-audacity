@@ -3,7 +3,7 @@
 There are a few options for running the OpenVINO module on Linux:
 
 1. [Install the Audacity Snap](#install-the-audacity-snap)
-2. [Audacity OpenVINO module build for Linux (Ubuntu 24.04)](#audacity-openvino-module-build-for-linux-ubuntu-2204)
+2. [Audacity OpenVINO module build for Linux (Ubuntu 24.04)](#audacity-openvino-module-build-for-linux-ubuntu-2404)
 
 ## Install the Audacity Snap
 
