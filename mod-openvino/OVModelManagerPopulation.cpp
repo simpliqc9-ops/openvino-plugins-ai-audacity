@@ -180,8 +180,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_restora
 
 static std::shared_ptr< OVModelManager::ModelCollection > populate_music_generation()
 {
-   //TODO: Change 'main' to specific commit-id
-   std::string baseUrl = "https://huggingface.co/Intel/musicgen-static-openvino/resolve/main/";
+   std::string baseUrl = "https://huggingface.co/Intel/musicgen-static-openvino/resolve/69762470bfeb586de530918bf1c0d8b105072d50/";
    std::shared_ptr<OVModelManager::ModelInfo> common = std::make_shared<OVModelManager::ModelInfo>();
    common->model_name = "Music Generation Common";
    common->baseUrl = baseUrl;
@@ -487,8 +486,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_whisper()
 
 static std::shared_ptr< OVModelManager::ModelCollection > populate_super_resolution()
 {
-   //TODO: Change 'main' to specific commit-id
-   std::string baseUrl = "https://huggingface.co/Intel/versatile_audio_super_resolution_openvino/resolve/main/";
+   std::string baseUrl = "https://huggingface.co/Intel/versatile_audio_super_resolution_openvino/resolve/b98a5a9e21ede61cd556cd04d425bf5bfd675328/";
    std::shared_ptr<OVModelManager::ModelInfo> common = std::make_shared<OVModelManager::ModelInfo>();
    common->model_name = "Super Resolution Common";
    common->baseUrl = baseUrl;
@@ -533,8 +531,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_noise_suppres
 
    //deepfilternet
    {
-      //TODO: replace 'main' with specific commit-id
-      std::string baseUrl = "https://huggingface.co/Intel/deepfilternet-openvino/resolve/main/";
+      std::string baseUrl = "https://huggingface.co/Intel/deepfilternet-openvino/resolve/0615a1b18be8585156130a98fdbca75e9719eda3/";
 
       // deepfilternet2
       {
