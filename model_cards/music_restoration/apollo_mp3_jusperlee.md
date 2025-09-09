@@ -6,6 +6,6 @@ See [@JusperLee](https://github.com/JusperLee) project here: [https://github.com
 
 As well as the HuggingFace project, here: [https://huggingface.co/JusperLee/Apollo](https://huggingface.co/JusperLee/Apollo)
 
-For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch models source models were converted to OpenVINO IR format, and stored here: TODO!
+For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch models source models were converted to OpenVINO IR format, and stored here: [Intel/apollo_jusperlee_openvino](https://huggingface.co/Intel/apollo_jusperlee_openvino)
 
 License: [cc-by-sa-4.0](https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/cc-by-sa-4.0.md)

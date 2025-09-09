@@ -15,7 +15,7 @@ The Whisper models available to use with this project come in three *quantizatio
 There are many variants of whisper models, each one representing a tradeoff between accuracy, speed, and resource requirements.
 
 ### Base:
-A 74M parameter multilingual model. 
+A 74M parameter multilingual model.  
 **Multi-Language Support**: Yes  
 **Best for**: General purpose transcription with reasonable accuracy when resources are limited. This is a great balance between speed and accuracy.  
  

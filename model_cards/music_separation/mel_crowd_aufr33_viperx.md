@@ -11,6 +11,6 @@ This model was trained by [@aufr33](https://github.com/aufr33) & [@viperx](https
 
 The source pytorch models (checkpoint) & config were originally posted here: [https://github.com/ZFTurbo/Music-Source-Separation-Training/releases/tag/v.1.0.4](https://github.com/ZFTurbo/Music-Source-Separation-Training/releases/tag/v.1.0.4)
 
-For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: TODO
+For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: [Intel/crowd_mel_band_roformer_aufr33_viperx_openvino](https://huggingface.co/Intel/crowd_mel_band_roformer_aufr33_viperx_openvino)
 
 License: [MIT](https://github.com/ZFTurbo/Music-Source-Separation-Training?tab=MIT-1-ov-file#readme)
