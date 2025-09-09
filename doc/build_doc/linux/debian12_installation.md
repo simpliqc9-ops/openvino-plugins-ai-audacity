@@ -94,7 +94,7 @@ cd ..
 
 mkdir audacity-build
 cd audacity-build
-cmake -G "Unix Makefiles" ../audacity -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" ../audacity -Daudacity_has_networking=ON -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 ```
 
