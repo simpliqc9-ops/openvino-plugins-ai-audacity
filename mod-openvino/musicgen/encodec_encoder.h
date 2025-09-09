@@ -4,7 +4,7 @@
 
 #include <torch/torch.h>
 #include <openvino/openvino.hpp>
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 #include "musicgen_config.h"
 
 namespace ov_musicgen

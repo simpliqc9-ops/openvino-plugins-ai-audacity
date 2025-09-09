@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 set( OV_MUSICGEN_SOURCES
-musicgen/musicgen_utils.h 
 musicgen/encodec_encoder.h 
 musicgen/musicgen_decoder.h
 musicgen/musicgen_decoder.cpp

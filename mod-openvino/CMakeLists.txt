@@ -77,6 +77,7 @@ set( SOURCES
       ${NOISE_SUPPRESSION_SOURCES}
       ${AUDIO_SR_SOURCES}
       ${DEMIX_SOURCES}
+      utils/openvino_utils.h
       OVDemixerEffect.cpp
       OVDemixerEffect.h
       OVMusicSeparation.cpp

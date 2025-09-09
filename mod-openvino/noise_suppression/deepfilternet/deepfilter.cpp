@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "deepfilter.h"
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 
 
 namespace ov_deepfilternet
@@ -91,7 +91,7 @@ namespace ov_deepfilternet
 
       //this might be overkill, but it seems to provide good results... and inference on a 30-second
       // snippet is super fast, so why not.
-      // 
+      //
       //TODO! Even though we overlap 10 seconds, only crossfade half of that (i.e. throw away entirely half of new segment).
       // The start of each new segment has a zero-ed out initial state, and could potentially have weird 'starting' artifacts.
       double crossfade_overlap_seconds = 10;

@@ -4,7 +4,7 @@
 #include <openvino/openvino.hpp>
 #include <fstream>
 
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 namespace ov_audiosr
 {
 
@@ -48,7 +48,7 @@ namespace ov_audiosr
 
    struct CallbackParams
    {
-      //return false if you want to cancel. 
+      //return false if you want to cancel.
       typedef bool (*CallbackFunc)(int ddpm_ith_step_complete,
          void* user);
 

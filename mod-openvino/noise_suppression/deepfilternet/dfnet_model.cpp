@@ -1,7 +1,7 @@
 // Copyright (C) 2024 Intel Corporation
 // SPDX-License-Identifier: GPL-3.0-only
 #include "dfnet_model.h"
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 
 namespace ov_deepfilternet
 {
@@ -275,9 +275,9 @@ namespace ov_deepfilternet
 
          auto lsnr = wrap_ov_tensor_as_torch(_infer_request_enc.get_tensor("lsnr"));
 
-         //note: remember, the output tensors of _infer_request_enc are set as input tensors for 
+         //note: remember, the output tensors of _infer_request_enc are set as input tensors for
          // both _infer_request_erb_dec and _infer_request_df_dec, which is why you don't see me explictly
-         // grabbing the output of the above infer, and copying them to the input tensors for the other 
+         // grabbing the output of the above infer, and copying them to the input tensors for the other
          // infer_requests.
       }
 
@@ -366,9 +366,9 @@ namespace ov_deepfilternet
          _infer_request_enc.infer();
 
 
-         //note: remember, the output tensors of _infer_request_enc are set as input tensors for 
+         //note: remember, the output tensors of _infer_request_enc are set as input tensors for
          // both _infer_request_erb_dec and _infer_request_df_dec, which is why you don't see me explictly
-         // grabbing the output of the above infer, and copying them to the input tensors for the other 
+         // grabbing the output of the above infer, and copying them to the input tensors for the other
          // infer_requests.
       }
 
