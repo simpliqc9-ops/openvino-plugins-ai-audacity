@@ -103,11 +103,16 @@ set( SOURCES
 set( LIBRARIES
    PRIVATE
       Audacity
-      lib-network-manager
       openvino::runtime
       openvino::genai
       ${TORCH_LIBRARIES}
 )
+
+if( audacity_has_networking )
+   list(APPEND LIBRARIES lib-network-manager)
+else()
+   message(WARNING "Audacity is building without network support. The model manager will not have the ability to download models.")
+endif()
 
 audacity_module( ${TARGET} "${SOURCES}" "${LIBRARIES}" "" "" )
 

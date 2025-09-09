@@ -1,7 +1,9 @@
 #include "OVModelManager.h"
+#ifdef HAS_NETWORKING
 #include <NetworkManager.h>
 #include <Request.h>
 #include <IResponse.h>
+#endif
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -154,6 +156,7 @@ static inline void mkdir_relative_paths(std::string relative_file, wxString base
 
 size_t OVModelManager::install_model_size(std::shared_ptr<ModelInfo> model_info)
 {
+#ifdef HAS_NETWORKING
    if (!model_info) {
       std::cout << "install_model_size called on null model_info" << std::endl;
    }
@@ -229,11 +232,15 @@ size_t OVModelManager::install_model_size(std::shared_ptr<ModelInfo> model_info)
    }
 
    return total_size;
+#else
+   throw std::runtime_error("install_model_size called, but this build has no networking support!");
+#endif
 }
 
 static void download_model_files(std::shared_ptr<OVModelManager::ModelInfo> model_info, const FilePath &base_openvino_models_path, size_t total_download_size,
    size_t& bytes_downloaded_so_far, OVModelManager::ProgressCallback callback)
 {
+#ifdef HAS_NETWORKING
    audacity::network_manager::NetworkManager& manager = audacity::network_manager::NetworkManager::GetInstance();
 
    bool bError = false;
@@ -316,6 +323,9 @@ static void download_model_files(std::shared_ptr<OVModelManager::ModelInfo> mode
 
       std::cout << "finished downloading " << url << std::endl;
    }
+#else
+   throw std::runtime_error("download_model_files called, but this build has no networking support!");
+#endif
 }
 
 void OVModelManager::install_model(std::string effect, std::string model_id, ProgressCallback callback)

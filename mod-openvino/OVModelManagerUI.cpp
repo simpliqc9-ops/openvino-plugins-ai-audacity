@@ -55,6 +55,11 @@ ModelEntryPanel::ModelEntryPanel(wxWindow* parent, const std::string peffect, st
       }
       installButton->Enable(false);
    }
+#ifndef HAS_NETWORKING
+   // if we don't have networking support, disable (grey-out) install button.
+   installButton->Enable(false);
+#endif
+
    sizer->Add(installButton, 0, wxALIGN_CENTER_VERTICAL);
 
    SetSizerAndFit(sizer);
