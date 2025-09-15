@@ -13,6 +13,6 @@ Take a look at the GitHub project, here: [https://github.com/KimberleyJensen/Mel
 
 Note that there is also a HuggingFace space here: [https://huggingface.co/KimberleyJSN/melbandroformer](https://huggingface.co/KimberleyJSN/melbandroformer)
 
-For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: TODO
+For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: [Intel/vocals_mel_band_roformer_kimberleyJSN_openvino](https://huggingface.co/Intel/vocals_mel_band_roformer_kimberleyJSN_openvino)
 
 License: [GPL-3.0](https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/gpl-3.0.md)

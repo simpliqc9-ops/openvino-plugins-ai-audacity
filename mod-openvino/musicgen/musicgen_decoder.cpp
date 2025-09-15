@@ -1,7 +1,7 @@
 // Copyright (C) 2024 Intel Corporation
 // SPDX-License-Identifier: GPL-3.0-only
 #include "musicgen_decoder.h"
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 #include "musicgen_config.h"
 
 using namespace std::chrono;
@@ -127,7 +127,7 @@ namespace ov_musicgen
          _infer_request_initial.set_tensor(present_value_name, past_encoder_values[layeri]);
       }
 
-      
+
 
       for (size_t layeri = 0; layeri < _decoder_config.num_hidden_layers; layeri++)
       {
@@ -218,7 +218,7 @@ namespace ov_musicgen
 
    void StaticKVCacheManager::UpdateFromLargeContext()
    {
-      //copy 'kv_valid_size' kv values  
+      //copy 'kv_valid_size' kv values
       for (int deci = 0; deci < _decoder_config.num_hidden_layers; deci++)
       {
          auto &past_key_tensor = past_decoder_keys[deci];
@@ -273,7 +273,7 @@ namespace ov_musicgen
       return decoder_config;
    }
 
-   
+
 
 	MusicgenDecoderStatic::MusicgenDecoderStatic(ov::Core& core, MusicGenConfig& config)
       : _decoder_config(GenerateDecoderConfig(config))
@@ -543,7 +543,7 @@ namespace ov_musicgen
          auto encoder_attention_mask = _infer_request_nonkv.get_tensor("encoder_attention_mask");
          memset(encoder_attention_mask.data(), 0, encoder_attention_mask.get_byte_size());
       }
-      
+
       //fill attention masks with 0's
       for (auto& tensorname : { "encoder_attention_mask", "decoder_attention_mask" })
       {
@@ -616,7 +616,7 @@ namespace ov_musicgen
          {
 
             auto decoder_attention_mask = wrap_ov_tensor_as_torch(_infer_request.get_tensor("decoder_attention_mask"));
-            
+
             if (_past_length > 0)
             {
                decoder_attention_mask.index_put_({ torch::indexing::Slice(), _past_length - 1 }, 1);

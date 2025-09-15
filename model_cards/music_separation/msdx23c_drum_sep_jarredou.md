@@ -1,6 +1,6 @@
 # MDX23C Drum Separation (@jarredou)
 
-A MDX23C-based drum sepration model that can produce 5 stems: kick, snare, toms, hi-hat, cymbals
+A MDX23C-based drum sepration model that will produce 6 stems: kick, snare, toms, hi-hat, cymbals, and residual.
 
 As this is a MDX23C model, expect long processing times.
 
@@ -17,6 +17,6 @@ This model was trained by [@jarredou](https://github.com/jarredou).
 
 The original pytorch checkpoint / config were downloaded from their GitHub release here: [https://github.com/jarredou/models/releases/tag/DrumSep](https://github.com/jarredou/models/releases/tag/DrumSep)
 
-For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: TODO
+For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: [Intel/drumsep_mdx23c_jarredou_openvino](https://huggingface.co/Intel/drumsep_mdx23c_jarredou_openvino)
 
 License: [Attribution-NonCommercial-ShareAlike 4.0 International](https://github.com/jarredou/models?tab=License-1-ov-file#readme)

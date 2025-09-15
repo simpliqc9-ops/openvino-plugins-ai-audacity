@@ -180,8 +180,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_music_restora
 
 static std::shared_ptr< OVModelManager::ModelCollection > populate_music_generation()
 {
-   //TODO: Change 'main' to specific commit-id
-   std::string baseUrl = "https://huggingface.co/Intel/musicgen-static-openvino/resolve/main/";
+   std::string baseUrl = "https://huggingface.co/Intel/musicgen-static-openvino/resolve/69762470bfeb586de530918bf1c0d8b105072d50/";
    std::shared_ptr<OVModelManager::ModelInfo> common = std::make_shared<OVModelManager::ModelInfo>();
    common->model_name = "Music Generation Common";
    common->baseUrl = baseUrl;
@@ -347,37 +346,37 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_whisper()
       {
          "Whisper Base (FP16)",
          "whisper-base-fp16-ov",
-         "https://huggingface.co/OpenVINO/whisper-base-fp16-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-base-fp16-ov/resolve/e95b28c093fc5f22d2b0d5b48524497d7784f308/",
          "FP16-quantized version of Whisper-Base. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Base (INT8)",
          "whisper-base-int8-ov",
-         "https://huggingface.co/OpenVINO/whisper-base-int8-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-base-int8-ov/resolve/ddb022a4299a78a0104e1f5b1eb2aae13859fc74/",
          "INT8-quantized version of Whisper-Base. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Base (INT4)",
          "whisper-base-int4-ov",
-         "https://huggingface.co/OpenVINO/whisper-base-int4-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-base-int4-ov/resolve/7d7a04e34adc1a1b7c9f14f0886daeed8900c892/",
          "INT4-quantized version of Whisper-Base. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Medium (FP16)",
          "whisper-medium-fp16-ov",
-         "https://huggingface.co/OpenVINO/whisper-medium-fp16-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-medium-fp16-ov/resolve/f44696c80386be16a024c91b3d75884367881ef2/",
          "FP16-quantized version of Whisper-Medium. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Medium (INT8)",
          "whisper-medium-int8-ov",
-         "https://huggingface.co/OpenVINO/whisper-medium-int8-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-medium-int8-ov/resolve/32f273ed2b7b780171a0435b0922f27787d682d2/",
          "INT8-quantized version of Whisper-Medium. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Medium (INT4)",
          "whisper-medium-int4-ov",
-         "https://huggingface.co/OpenVINO/whisper-medium-int4-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-medium-int4-ov/resolve/ff948b0e03fba6d41059225e8242a844b373dc76/",
          "INT4-quantized version of Whisper-Medium. See Quantization / Model Variant Guides below for more information."
       },
       {
@@ -401,37 +400,37 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_whisper()
       {
          "Whisper Large V3 (FP16)",
          "whisper-large-v3-fp16-ov",
-         "https://huggingface.co/OpenVINO/whisper-large-v3-fp16-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-large-v3-fp16-ov/resolve/9e15f59e87f0b618f63c7da329bd77fcde5c26c1/",
          "FP16-quantized version of Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Large V3 (INT8)",
          "whisper-large-v3-int8-ov",
-         "https://huggingface.co/OpenVINO/whisper-large-v3-int8-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-large-v3-int8-ov/resolve/b31e1dcee5de24d49c6cc96da2a603eae409e722/",
          "INT8-quantized version of Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Whisper Large V3 (INT4)",
          "whisper-large-v3-int4-ov",
-         "https://huggingface.co/OpenVINO/whisper-large-v3-int4-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/whisper-large-v3-int4-ov/resolve/1c151299249b18003eabf874e02e2ed65bb08468/",
          "INT4-quantized version of Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Distil-Whisper Large V3 (FP16)",
          "distil-whisper-large-v3-fp16-ov",
-         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-fp16-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-fp16-ov/resolve/eef9b75180e7ff7a8fc026f6ef2cd6011de60fe7/",
          "FP16-quantized version of Distil-Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Distil-Whisper Large V3 (INT8)",
          "distil-whisper-large-v3-int8-ov",
-         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-int8-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-int8-ov/resolve/81a5607b6139e8fbb7fb5aa73e9549323f1be258/",
          "INT8-quantized version of Distil-Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
          "Distil-Whisper Large V3 (INT4)",
          "distil-whisper-large-v3-int4-ov",
-         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-int4-ov/resolve/main/",
+         "https://huggingface.co/OpenVINO/distil-whisper-large-v3-int4-ov/resolve/d22aaac1a45a2dd82bf8485570927be06ff9d6ba/",
          "INT4-quantized version of Distil-Whisper-Large-V3. See Quantization / Model Variant Guides below for more information."
       },
       {
@@ -467,7 +466,6 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_whisper()
       // Add the 'general' info from whisper/info.md
       info += whisper_transcription_info;
 
-      //TODO: add some more detailed info here..
       whisper_info->info = info;
 
       whisper_info->baseUrl = whisper_model_info.base_url;
@@ -488,8 +486,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_whisper()
 
 static std::shared_ptr< OVModelManager::ModelCollection > populate_super_resolution()
 {
-   //TODO: Change 'main' to specific commit-id
-   std::string baseUrl = "https://huggingface.co/Intel/versatile_audio_super_resolution_openvino/resolve/main/";
+   std::string baseUrl = "https://huggingface.co/Intel/versatile_audio_super_resolution_openvino/resolve/b98a5a9e21ede61cd556cd04d425bf5bfd675328/";
    std::shared_ptr<OVModelManager::ModelInfo> common = std::make_shared<OVModelManager::ModelInfo>();
    common->model_name = "Super Resolution Common";
    common->baseUrl = baseUrl;
@@ -534,8 +531,7 @@ static std::shared_ptr< OVModelManager::ModelCollection > populate_noise_suppres
 
    //deepfilternet
    {
-      //TODO: replace 'main' with specific commit-id
-      std::string baseUrl = "https://huggingface.co/Intel/deepfilternet-openvino/resolve/main/";
+      std::string baseUrl = "https://huggingface.co/Intel/deepfilternet-openvino/resolve/0615a1b18be8585156130a98fdbca75e9719eda3/";
 
       // deepfilternet2
       {

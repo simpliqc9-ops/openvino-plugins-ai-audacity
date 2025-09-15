@@ -54,7 +54,7 @@ const char* music_restoration_apollo_mp3_jusperlee = R"md(
 <p>An Apollo-based lossy restoration model that works well to restore quality of low-bitrate MP3s.</p>
 <p>See <a href="https://github.com/JusperLee">@JusperLee</a> project here: <a href="https://github.com/JusperLee/Apollo/">https://github.com/JusperLee/Apollo/</a></p>
 <p>As well as the HuggingFace project, here: <a href="https://huggingface.co/JusperLee/Apollo">https://huggingface.co/JusperLee/Apollo</a></p>
-<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch models source models were converted to OpenVINO IR format, and stored here: TODO!</p>
+<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch models source models were converted to OpenVINO IR format, and stored here: <a href="https://huggingface.co/Intel/apollo_jusperlee_openvino">Intel/apollo_jusperlee_openvino</a></p>
 <p>License: <a href="https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/cc-by-sa-4.0.md">cc-by-sa-4.0</a></p>
 )md";
 
@@ -135,7 +135,7 @@ const char* music_separation_mel_crowd_aufr33_viperx = R"md(
 <code>no_crowd = input_track - crowd</code></p>
 <p>This model was trained by <a href="https://github.com/aufr33">@aufr33</a> &amp; <a href="https://github.com/playdasegunda">@viperx</a></p>
 <p>The source pytorch models (checkpoint) &amp; config were originally posted here: <a href="https://github.com/ZFTurbo/Music-Source-Separation-Training/releases/tag/v.1.0.4">https://github.com/ZFTurbo/Music-Source-Separation-Training/releases/tag/v.1.0.4</a></p>
-<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: TODO</p>
+<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: <a href="https://huggingface.co/Intel/crowd_mel_band_roformer_aufr33_viperx_openvino">Intel/crowd_mel_band_roformer_aufr33_viperx_openvino</a></p>
 <p>License: <a href="https://github.com/ZFTurbo/Music-Source-Separation-Training?tab=MIT-1-ov-file#readme">MIT</a></p>
 )md";
 
@@ -147,13 +147,13 @@ const char* music_separation_mel_vocals_kimberley_jenson = R"md(
 <p>This model was trained by <a href="https://github.com/KimberleyJensen">@KimberleyJensen</a></p>
 <p>Take a look at the GitHub project, here: <a href="https://github.com/KimberleyJensen/Mel-Band-Roformer-Vocal-Model">https://github.com/KimberleyJensen/Mel-Band-Roformer-Vocal-Model</a></p>
 <p>Note that there is also a HuggingFace space here: <a href="https://huggingface.co/KimberleyJSN/melbandroformer">https://huggingface.co/KimberleyJSN/melbandroformer</a></p>
-<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: TODO</p>
+<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: <a href="https://huggingface.co/Intel/vocals_mel_band_roformer_kimberleyJSN_openvino">Intel/vocals_mel_band_roformer_kimberleyJSN_openvino</a></p>
 <p>License: <a href="https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/gpl-3.0.md">GPL-3.0</a></p>
 )md";
 
 const char* music_separation_msdx23c_drum_sep_jarredou = R"md(
 <h1>MDX23C Drum Separation (@jarredou)</h1>
-<p>A MDX23C-based drum sepration model that can produce 5 stems: kick, snare, toms, hi-hat, cymbals</p>
+<p>A MDX23C-based drum sepration model that will produce 6 stems: kick, snare, toms, hi-hat, cymbals, and residual.</p>
 <p>As this is a MDX23C model, expect long processing times.</p>
 <p>Note that this model natively produces a five stems: kick, snare, toms, hi-hat, &amp; cymbals</p>
 <p>There is an additional 'residual' track that is produced, which contains the 'leftover' of whatever is not contained in these five native stems.</p>
@@ -161,8 +161,8 @@ const char* music_separation_msdx23c_drum_sep_jarredou = R"md(
 <code>residual = input_track - (kick + snare + toms + hi-hat + cymbals)</code></p>
 <p>This model was trained by <a href="https://github.com/jarredou">@jarredou</a>.</p>
 <p>The original pytorch checkpoint / config were downloaded from their GitHub release here: <a href="https://github.com/jarredou/models/releases/tag/DrumSep">https://github.com/jarredou/models/releases/tag/DrumSep</a></p>
-<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: TODO</p>
-<p>License: <a href="https://github.com/jarredou/models?tab=License-1-ov-file#readme">Attribution-NonCommercial-NoDerivatives 4.0 International</a></p>
+<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: <a href="https://huggingface.co/Intel/drumsep_mdx23c_jarredou_openvino">Intel/drumsep_mdx23c_jarredou_openvino</a></p>
+<p>License: <a href="https://github.com/jarredou/models?tab=License-1-ov-file#readme">Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
 )md";
 
 const char* noise_suppression_deepfilternet2 = R"md(
@@ -198,7 +198,7 @@ const char* reverb_removal_mel_band_dereverb_mono_anvuew = R"md(
 <p>As this is a MelBandRoformer model, so expect long processing times.</p>
 <p>This model was trained by <a href="https://huggingface.co/anvuew">@anvuew</a>.</p>
 <p>The original pytorch checkpoint / config were downloaded from HuggingFace here: <a href="https://huggingface.co/anvuew/dereverb_mel_band_roformer">https://huggingface.co/anvuew/dereverb_mel_band_roformer</a></p>
-<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: TODO</p>
+<p>For use with <a href="https://github.com/intel/openvino-plugins-ai-audacity">OpenVINO AI Plugins for Audacity</a>, the pytorch source models were converted to OpenVINO IR format, and stored here: <a href="https://huggingface.co/Intel/dereverb_mel_band_roformer_anvuew_openvino">Intel/dereverb_mel_band_roformer_anvuew_openvino</a></p>
 <p>License: <a href="https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/gpl-3.0.md">GPL-3.0</a></p>
 )md";
 
@@ -234,7 +234,7 @@ const char* whisper_transcription_info = R"md(
 <p><strong>Note</strong>: The following guide has used / copied / modified some of the information found here: <a href="https://whisper-api.com/blog/models/">https://whisper-api.com/blog/models/</a></p>
 <p>There are many variants of whisper models, each one representing a tradeoff between accuracy, speed, and resource requirements.</p>
 <h3>Base:</h3>
-<p>A 74M parameter multilingual model.
+<p>A 74M parameter multilingual model.<br />
 <strong>Multi-Language Support</strong>: Yes<br />
 <strong>Best for</strong>: General purpose transcription with reasonable accuracy when resources are limited. This is a great balance between speed and accuracy.  </p>
 <h3>Small:</h3>

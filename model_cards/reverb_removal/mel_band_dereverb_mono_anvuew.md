@@ -12,6 +12,6 @@ This model was trained by [@anvuew](https://huggingface.co/anvuew).
 
 The original pytorch checkpoint / config were downloaded from HuggingFace here: [https://huggingface.co/anvuew/dereverb_mel_band_roformer](https://huggingface.co/anvuew/dereverb_mel_band_roformer)
 
-For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: TODO
+For use with [OpenVINO AI Plugins for Audacity](https://github.com/intel/openvino-plugins-ai-audacity), the pytorch source models were converted to OpenVINO IR format, and stored here: [Intel/dereverb_mel_band_roformer_anvuew_openvino](https://huggingface.co/Intel/dereverb_mel_band_roformer_anvuew_openvino)
 
 License: [GPL-3.0](https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/gpl-3.0.md)

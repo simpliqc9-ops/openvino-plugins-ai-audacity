@@ -1,7 +1,9 @@
 #include "OVModelManager.h"
+#ifdef HAS_NETWORKING
 #include <NetworkManager.h>
 #include <Request.h>
 #include <IResponse.h>
+#endif
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -23,8 +25,23 @@ std::shared_ptr<OVModelManager::ModelCollection> OVModelManager::GetModelCollect
    return it->second;
 }
 
+static inline std::optional<std::string> get_env_var(const std::string& name) {
+   if (const char* value = std::getenv(name.c_str())) {
+      return std::string(value); // copy into std::string
+   }
+   return std::nullopt; // not found
+}
+
 OVModelManager::OVModelManager()
 {
+   auto model_path_from_env = get_env_var("AUDACITY_OPENVINO_MODELS_PATH");
+
+   // Allow an environment variable to override the default path for installation.
+   if (model_path_from_env) {
+      FilePath env_openvino_models_path = FileNames::MkDir(wxFileName(wxString(*model_path_from_env)).GetFullPath());
+      mSearchPaths.push_back(env_openvino_models_path);
+   }
+
    // Populate search paths where we look for installed models. Note that the first one appended to the list (appdata) is the *preferred*
    // location to find models, and this is where models will be installed to with the UI-based ModelManager.
    {
@@ -123,7 +140,7 @@ void OVModelManager::_check_installed_models()
       auto& collection = collection_pair.second;
       for (auto& model_info : collection->models)
       {
-         _check_installed_model(model_info);  
+         _check_installed_model(model_info);
       }
    }
 }
@@ -139,6 +156,7 @@ static inline void mkdir_relative_paths(std::string relative_file, wxString base
 
 size_t OVModelManager::install_model_size(std::shared_ptr<ModelInfo> model_info)
 {
+#ifdef HAS_NETWORKING
    if (!model_info) {
       std::cout << "install_model_size called on null model_info" << std::endl;
    }
@@ -214,11 +232,15 @@ size_t OVModelManager::install_model_size(std::shared_ptr<ModelInfo> model_info)
    }
 
    return total_size;
+#else
+   throw std::runtime_error("install_model_size called, but this build has no networking support!");
+#endif
 }
 
 static void download_model_files(std::shared_ptr<OVModelManager::ModelInfo> model_info, const FilePath &base_openvino_models_path, size_t total_download_size,
    size_t& bytes_downloaded_so_far, OVModelManager::ProgressCallback callback)
 {
+#ifdef HAS_NETWORKING
    audacity::network_manager::NetworkManager& manager = audacity::network_manager::NetworkManager::GetInstance();
 
    bool bError = false;
@@ -301,6 +323,9 @@ static void download_model_files(std::shared_ptr<OVModelManager::ModelInfo> mode
 
       std::cout << "finished downloading " << url << std::endl;
    }
+#else
+   throw std::runtime_error("download_model_files called, but this build has no networking support!");
+#endif
 }
 
 void OVModelManager::install_model(std::string effect, std::string model_id, ProgressCallback callback)

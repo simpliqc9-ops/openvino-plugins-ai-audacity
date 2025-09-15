@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <demix/mel_band_roformer.h>
-#include "musicgen/musicgen_utils.h"
+#include "utils/openvino_utils.h"
 
 namespace ov_demix
 {

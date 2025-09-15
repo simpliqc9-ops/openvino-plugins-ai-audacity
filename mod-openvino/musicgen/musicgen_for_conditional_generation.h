@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include <ittutils.h>
-#include "musicgen_utils.h"
+#include "utils/openvino_utils.h"
 #include "musicgen_config.h"
 
 
