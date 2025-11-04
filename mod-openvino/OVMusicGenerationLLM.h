@@ -54,6 +54,7 @@ public:
    bool UpdateProgress(double perc);
 
    bool MusicGenCallback(float perc_complete);
+   void OnModelManagerButtonClicked(wxCommandEvent& evt);
 
    virtual bool DoEffect(
       EffectSettings& settings, //!< Always given; only for processing
@@ -93,12 +94,16 @@ private:
       ID_Type_AudioContinuationCheckBox,
       ID_Type_AudioContinuationAsNewTrackCheckBox,
 
-      ID_Type_DeviceInfoButton
+      ID_Type_DeviceInfoButton,
+      ID_Type_ModelManagerButton,
+      ID_Type_ExecutionMode
    };
 
    void OnContextLengthChanged(wxCommandEvent& evt);
    void OnUnloadModelsButtonClicked(wxCommandEvent& evt);
    void OnDeviceInfoButtonClicked(wxCommandEvent& evt);
+   void OnDecoderDeviceSelectionChanged(wxCommandEvent& evt);
+   void ShowOrHideExecutionMode();
 
    wxChoice* mTypeChoiceDeviceCtrl_EnCodec;
    wxChoice* mTypeChoiceDeviceCtrl_Decode0;
@@ -106,8 +111,7 @@ private:
 
 
    int m_deviceSelectionChoice_EnCodec = 0;
-   int m_deviceSelectionChoice_MusicGenDecode0 = 0;
-   int m_deviceSelectionChoice_MusicGenDecode1 = 0;
+   int m_deviceSelectionChoice_MusicGenDecode = 0;
 
    std::vector< EnumValueSymbol > mGuiDeviceVPUSupportedSelections;
    std::vector< EnumValueSymbol > mGuiDeviceNonVPUSupportedSelections;
@@ -144,10 +148,14 @@ private:
    int m_contextLengthChoice = 1; //default to 10s
    wxChoice* mTypeChoiceContextLength;
 
-   std::vector< std::string > mModelSelections;
+   std::vector< std::string > mSupportedModels;
    std::vector< EnumValueSymbol > mGuiModelSelections;
    int m_modelSelectionChoice = 0;
    wxChoice* mTypeChoiceModelSelection;
+
+   int m_executionModeChoice = 0;
+   wxChoice* mTypeExecutionModeSelection;
+   std::vector< EnumValueSymbol > mGuiExecutionModeSelections;
 
    wxCheckBox* _AudioContinuationCheckBox;
    wxCheckBox* _AudioContinuationAsNewTrackCheckBox;

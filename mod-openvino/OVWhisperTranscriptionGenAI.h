@@ -17,15 +17,15 @@ class wxSizer;
 #include <wx/weakref.h>
 
 
-class EffectOVWhisperTranscription final : public StatefulEffect, public StatefulEffectUIServices
+class EffectOVWhisperTranscriptionGenAI final : public StatefulEffect, public StatefulEffectUIServices
 {
 public:
    //static inline EffectOVWhisperTranscription*
    //   FetchParameters(EffectOVWhisperTranscription& e, EffectSettings&) { return &e; }
    static const ComponentInterfaceSymbol Symbol;
 
-   EffectOVWhisperTranscription();
-   virtual ~EffectOVWhisperTranscription();
+   EffectOVWhisperTranscriptionGenAI();
+   virtual ~EffectOVWhisperTranscriptionGenAI();
 
    // ComponentInterface implementation
 
@@ -43,10 +43,10 @@ public:
       EffectSettingsAccess& access, const EffectOutputs* pOutputs) override;
 
    bool UpdateProgress(double perc);
-   bool _EncoderBegin();
 
    void OnAdvancedCheckboxChanged(wxCommandEvent& evt);
    void OnDeviceInfoButtonClicked(wxCommandEvent& evt);
+   void OnModelManagerButtonClicked(wxCommandEvent& evt);
 
 protected:
 
@@ -64,8 +64,8 @@ private:
    //const EffectParameterMethods& Parameters() const override;
    bool ProcessStereoToMono(sampleCount& curTime, sampleCount totalTime, WaveTrack& track);
 
-   bool ProcessWhisper(WaveTrack* mono, LabelTrack* lt0, LabelTrack* lt1);
-   bool Whisper(std::vector<float>& mono_samples, LabelTrack* lt0, LabelTrack* lt1, double start_time);
+   bool ProcessWhisper(WaveTrack* mono, LabelTrack* lt0);
+   bool Whisper(std::vector<float>& mono_samples, LabelTrack* lt0, double start_time);
 
    wxWeakRef<wxWindow> mUIParent{};
 
@@ -76,7 +76,8 @@ private:
       ID_Type_Mode = 10002,
       ID_Type_Language = 10003,
       ID_Type_AdvancedCheckbox = 10004,
-      ID_Type_DeviceInfoButton = 10005
+      ID_Type_DeviceInfoButton = 10005,
+      ID_Type_ModelManagerButton = 10006
    };
 
    wxChoice* mTypeChoiceDeviceCtrl;
@@ -119,17 +120,11 @@ private:
 
    wxSizer* advancedSizer = nullptr;
 
-   int mMaxTextSegLength = 0;
-   wxTextCtrl* mMaxTextSegLengthCtrl = nullptr;
-
    std::string mInitialPrompt = "";
    wxTextCtrl* mInitialPromptCtrl = nullptr;
 
-   int mBeamSize = 1;
-   wxTextCtrl* mBeamSizeCtrl = nullptr;
-
-   int mBestOf = 1;
-   wxTextCtrl* mBestOfCtrl = nullptr;
+   std::string mHotwords = "";
+   wxTextCtrl* mHotwordsCtrl = nullptr;
 
    std::vector<std::pair<std::string, std::string>> m_simple_to_full_device_map;
 

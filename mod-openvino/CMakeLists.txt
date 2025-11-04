@@ -4,6 +4,7 @@
 set( TARGET mod-openvino )
 
 find_package(OpenVINO REQUIRED COMPONENTS Runtime)
+find_package(OpenVINOGenAI REQUIRED)
 
 message("ENV LIBTORCH_ROOTDIR = $ENV{LIBTORCH_ROOTDIR}")
 
@@ -14,18 +15,11 @@ set(CMAKE_PREFIX_PATH "${LIBTORCH_ROOTDIR}/share/cmake/Torch")
 find_package(Torch REQUIRED)
 message("torch libraries = ${TORCH_LIBRARIES}")
 
-set(WHISPERCPP_ROOTDIR $ENV{WHISPERCPP_ROOTDIR})
-find_library(whisper NAMES whisper HINTS ${WHISPERCPP_ROOTDIR}/lib/static ${WHISPERCPP_ROOTDIR}/lib )
-include_directories(${WHISPERCPP_ROOTDIR}/include )
-message("whisper library = ${whisper}")
-
 #for musicgen
 #whether ITT is enabled or not, include ittutils.
 # This allows the project source files to unconditionally include <ittutils.h>
 # That header file will implement the preprocessor logic to *actually* enable ITT or not.
 include_directories( ittutils )
-
-find_package(OpenCL REQUIRED)
 
 add_subdirectory(musicgen)
 include_directories(musicgen)
@@ -49,7 +43,7 @@ set( NOISE_SUPPRESSION_SOURCES
 include_directories(noise_suppression)
 include_directories(noise_suppression/deepfilternet)
 
-set( AUDIO_SR_SOURCES 
+set( AUDIO_SR_SOURCES
      OVAudioSR.cpp
      OVAudioSR.h
      audio_sr/audiosr_common.h
@@ -66,29 +60,53 @@ set( AUDIO_SR_SOURCES
 
 include_directories(audio_sr)
 
+set( DEMIX_SOURCES
+     demix/demix.cpp
+     demix/demix.h
+     demix/htdemucs.cpp
+     demix/htdemucs.h
+     demix/mel_band_roformer.cpp
+     demix/mel_band_roformer.h
+     demix/apollo.h
+     demix/apollo.cpp
+     demix/mdx23c.h
+     demix/mdx23c.cpp
+)
+
 set( SOURCES
       ${NOISE_SUPPRESSION_SOURCES}
       ${AUDIO_SR_SOURCES}
+      ${DEMIX_SOURCES}
+      OVDemixerEffect.cpp
+      OVDemixerEffect.h
       OVMusicSeparation.cpp
       OVMusicSeparation.h
+      OVReverbRemoval.cpp
+      OVReverbRemoval.h
+      OVMusicRestoration.cpp
+      OVMusicRestoration.h
       OVMusicGenerationLLM.cpp
       OVMusicGenerationLLM.h
-      OVWhisperTranscription.cpp
-      OVWhisperTranscription.h
-      htdemucs.cpp
-      htdemucs.h
+      OVWhisperTranscriptionGenAI.cpp
+      OVWhisperTranscriptionGenAI.h
       ${OV_MUSICGEN_SOURCES}
       OpenVINO.cpp
       OVStringUtils.h
+      OVModelManagerUI.h
+      OVModelManagerUI.cpp
+      OVModelManager.h
+      OVModelManager.cpp
+      OVModelManagerPopulation.cpp
+      model_md_card_info.h
 )
 
 set( LIBRARIES
    PRIVATE
       Audacity
+      lib-network-manager
       openvino::runtime
-	   OpenCL::OpenCL
+      openvino::genai
       ${TORCH_LIBRARIES}
-      ${whisper}
 )
 
 audacity_module( ${TARGET} "${SOURCES}" "${LIBRARIES}" "" "" )
